@@ -11,19 +11,19 @@ import {
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/signUp">
-          <SignUp />
-        </Route>
-        <Route exact path="/">
-          <Index />
-        </Route>
-      </Switch>
-    </Router>
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signUp">
+            <SignUp />
+          </Route>
+          <Route exact path="/">
+            <Index />
+          </Route>
+        </Switch>
+      </Router>
   );
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-const Index =  () => {
-  const history = useHistory()
+
+const Index = () => {
+  const history = useHistory();
   const login = () => {
-    history.push('/login')
+    history.push('/login');
   };
   return (
     <div>
@@ -11,9 +12,9 @@ const Index =  () => {
       Index
     </div>
   );
-}
+};
 
-export default Index
+export default Index;
 
 
 
