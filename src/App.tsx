@@ -4,14 +4,14 @@ import SignUp from './components/SignUp/SignUp'
 import Index from './components/Index/Index'
 
 import {
-  BrowserRouter as Router,
+  HashRouter,
   Switch,
   Route,
 } from 'react-router-dom';
 
 const App = () => {
   return (
-      <Router>
+      <HashRouter>
         <Switch>
           <Route path="/login">
             <Login />
@@ -23,7 +23,7 @@ const App = () => {
             <Index />
           </Route>
         </Switch>
-      </Router>
+      </HashRouter>
   );
 };
 
