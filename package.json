@@ -15,6 +15,7 @@
     "axios": "^0.19.2",
     "customize-cra": "^0.9.1",
     "gh-pages": "^2.2.0",
+    "history": "^4.10.1",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.5",

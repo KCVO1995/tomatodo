@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Input} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
-import {Link} from 'react-router-dom';
-import axios from '../../config/axios';
+import {Link, useHistory} from 'react-router-dom';
+import axios from '@/config/axios';
 import './SignUp.scss';
 
 
@@ -10,6 +10,7 @@ const SignUp = () => {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const history = useHistory();
 
   const commit = async () => {
     axios.post('sign_up/user', {
@@ -18,6 +19,7 @@ const SignUp = () => {
       password_confirmation: passwordConfirmation
     }).then(() => {
       console.log('注册成功');
+      history.push('/login');
     }, (e) => {
       throw new Error(e);
     });

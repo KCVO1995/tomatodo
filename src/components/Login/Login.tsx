@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
 import {Input} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
-import {Link} from 'react-router-dom';
-import axios from '../../config/axios';
+import {Link, useHistory} from 'react-router-dom';
+import axios from '@/config/axios';
 import './Login.scss';
 
 
 const Login = () => {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
 
   const commit = async () => {
     axios.post('sign_in/user', {
       account,
       password,
     }).then(() => {
-      console.log('注册成功');
+      console.log('登陆成功');
+      history.push('/');
     }, (e) => {
       throw new Error(e);
     });
@@ -32,4 +34,4 @@ const Login = () => {
   );
 };
 
-export default Login
+export default Login;
