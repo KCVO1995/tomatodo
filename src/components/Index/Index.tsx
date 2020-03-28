@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import axios from '@/config/axios';
 import {useHistory} from 'react-router-dom';
+import {Menu, Dropdown } from 'antd/es'
+import { DownOutlined } from '@ant-design/icons';
+import '@/components/Index/Index.less'
 
 interface Use {
   id: number
@@ -13,39 +16,55 @@ interface Use {
   deleted: boolean
 }
 
-
 const Index = () => {
   const history = useHistory();
 
   const [user, setUser] = useState({} as Use);
 
   const getMe = async () => {
-    try {
-      const response = await axios.get('/me');
-      console.log(response);
-      setUser(response.data);
-    } catch (e) {
-
-    }
+    const response = await axios.get('/me');
+    setUser(response.data);
   };
 
-  useEffect(() => {
-    getMe();
-  }, []);
+  useEffect(() => {getMe();}, []);
 
   const logout = () => {
     localStorage.setItem('x-token', '');
     history.push('/login');
   };
 
-  return (
-    <div>
-      欢迎登陆 {user.id}
+  const menu = (
+    <Menu>
+      <Menu.Item key="1">
+        <span>偏好设置</span>
+      </Menu.Item>
+      <Menu.Item key="2" onClick={logout}>
+        <span>登出</span>
+      </Menu.Item>
+    </Menu>
+  );
 
-      <button onClick={logout}>注销</button>
+
+
+
+  return (
+    <div className="index">
+      <header>
+        <h1>Tomatodo</h1>
+        <Dropdown overlay={menu} trigger={['click']}>
+          <a href=" " className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+            <span>{user.account}</span><DownOutlined />
+          </a>
+        </Dropdown>
+      </header>
+
     </div>
   );
 };
+
+
+
+
 
 export default Index;
 
