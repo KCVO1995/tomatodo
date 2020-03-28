@@ -3,7 +3,7 @@ import {Input} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
 import {Link, useHistory} from 'react-router-dom';
 import axios from '@/config/axios';
-import './SignUp.scss';
+import './SignUp.less';
 
 
 const SignUp = () => {
