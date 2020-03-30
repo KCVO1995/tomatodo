@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {Menu, Dropdown } from 'antd/es'
 import { DownOutlined } from '@ant-design/icons';
 import '@/components/Index/Index.less'
+import MyTodo from '@/components/Todos/MyTodo.tsx'
 
 interface Use {
   id: number
@@ -16,7 +17,7 @@ interface Use {
   deleted: boolean
 }
 
-const Index = () => {
+const Index = (props: any) => {
   const history = useHistory();
 
   const [user, setUser] = useState({} as Use);
@@ -45,8 +46,6 @@ const Index = () => {
   );
 
 
-
-
   return (
     <div className="index">
       <header>
@@ -57,7 +56,7 @@ const Index = () => {
           </a>
         </Dropdown>
       </header>
-
+      <MyTodo />
     </div>
   );
 };
