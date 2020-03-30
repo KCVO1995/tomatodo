@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {Input} from 'antd';
 import {EnterOutlined} from '@ant-design/icons';
 
-interface Props {
+interface InputTodosProps {
   addTodo: (params: {description: string}) => void
 }
 
-const InputTodos = (props: Props) => {
+const InputTodos = (props: InputTodosProps) => {
   const [description, setDescription] = useState('');
 
   const commit = () => {
