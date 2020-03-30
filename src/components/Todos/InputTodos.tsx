@@ -1,17 +1,22 @@
-import React, {useContext} from 'react';
-import {descriptionContext} from '@/components/Todos/MyTodo';
+import React, {useState} from 'react';
 import {Input} from 'antd';
 import {EnterOutlined} from '@ant-design/icons';
 
-const InputTodos = () => {
-  const {setDescription, setAdd, description} = useContext(descriptionContext);
+interface Props {
+  addTodo: Function
+}
+
+const InputTodos = (props: Props) => {
+  const [description, setDescription] = useState('');
 
   const commit = () => {
-    if (description === '') {
-      alert('请指定一个任务');
+    if (description !== '') {
+      props.addTodo({description});
+      setDescription('');
     } else {
-      setAdd(true);
+      alert('请指定一个todo');
     }
+
   };
 
   return (

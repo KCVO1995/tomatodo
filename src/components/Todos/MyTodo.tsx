@@ -1,4 +1,4 @@
-import React, {useState, createContext, useEffect} from 'react';
+import React from 'react';
 import InputTodos from '@/components/Todos/InputTodos';
 import axios from '@/config/axios';
 
@@ -9,37 +9,24 @@ interface Context {
   setAdd: Function;
 }
 
-export const descriptionContext = createContext({} as Context);
 
-const MyTodo = (props: any) => {
-  const [description, setDescription] = useState('');
-  const [add, setAdd] = useState(false);
+const MyTodo = () => {
 
 
-  useEffect(() => {
-    const addTo = async () => {
-      try {
-        const response = await axios.post('todos', {description});
-        setAdd(false);
-        setDescription('');
-        console.log(response.data);
-      } catch (e) {
-        throw new Error(e);
-      }
-    };
-    if (add) {
-      addTo().then();
+  const addTodo = async (params: string) => {
+    try {
+      const response = await axios.post('todos', params);
+      console.log(response.data);
+    } catch (e) {
+      throw new Error(e);
     }
-  }, [description, add]);
+  };
 
 
   return (
-    <descriptionContext.Provider value={{description, setDescription, add, setAdd}}>
-      <div className="todos">
-        <InputTodos/>
-      </div>
-    </descriptionContext.Provider>
-
+    <div className="todos">
+      <InputTodos addTodo={addTodo} />
+    </div>
   );
 };
 
