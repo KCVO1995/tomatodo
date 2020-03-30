@@ -4,7 +4,7 @@ import InputItem from '@/components/Todos/InputItem';
 import axios from '@/config/axios';
 
 interface Todos {
-  id: string;
+  id: number;
   description: string;
   completed: boolean
 }
@@ -15,7 +15,8 @@ const MyTodo = () => {
   const addTodo = async (params: {}) => {
     try {
       const response = await axios.post('todos', params);
-      console.log(response.data);
+      console.log(response.data.resource);
+      getTodo()
     } catch (e) {
       throw new Error(e);
     }
@@ -33,14 +34,7 @@ const MyTodo = () => {
   const updateTodo = async (id: number, params: any) => {
     try {
       const response = await axios.put(`todos/${id}`, params);
-      console.log(response.data.resource);
-      const newTodos = todoList.map(t => {
-        if (parseFloat(t.id) === id) {
-          return response.data.resource;
-        } else {
-          return t;
-        }
-      });
+      const newTodos = todoList.map(t => t.id === id ? response.data.resource : t);
       setTodoList(newTodos);
     } catch (e) {
       throw new Error(e);
