@@ -3,7 +3,7 @@ import {Input} from 'antd';
 import {EnterOutlined} from '@ant-design/icons';
 
 interface Props {
-  addTodo: Function
+  addTodo: (params: {description: string}) => void
 }
 
 const InputTodos = (props: Props) => {

@@ -13,7 +13,7 @@ interface Context {
 const MyTodo = () => {
 
 
-  const addTodo = async (params: string) => {
+  const addTodo = async (params: {}) => {
     try {
       const response = await axios.post('todos', params);
       console.log(response.data);
