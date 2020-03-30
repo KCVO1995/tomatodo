@@ -21,6 +21,7 @@ const InputTodos = () => {
              suffix={description ? <EnterOutlined onClick={commit}/> : <span/>}
              onChange={e => setDescription(e.target.value)}
              onPressEnter={commit}
+             value={description}
       />
     </div>
   );

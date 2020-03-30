@@ -11,7 +11,7 @@ interface Context {
 
 export const descriptionContext = createContext({} as Context);
 
-const MyTodo = () => {
+const MyTodo = (props: any) => {
   const [description, setDescription] = useState('');
   const [add, setAdd] = useState(false);
 
@@ -20,9 +20,9 @@ const MyTodo = () => {
     const addTo = async () => {
       try {
         const response = await axios.post('todos', {description});
-        console.log(response.data);
         setAdd(false);
         setDescription('');
+        console.log(response.data);
       } catch (e) {
         throw new Error(e);
       }
