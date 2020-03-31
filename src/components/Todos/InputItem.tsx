@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Checkbox, Input} from 'antd';
 import {EnterOutlined, DeleteFilled} from '@ant-design/icons';
-import './InputItem.less'
+import classNames from 'classnames';
+import './InputItem.less';
 
 
 type UpdateItem = { params: boolean } | { completed: boolean } | { editing: boolean }
@@ -23,15 +24,13 @@ const InputTodos = (props: InputItemProps) => {
   const update = (params: any) => {props.updateTodo(props.todo.id, params);};
 
   const commit = () => {
-    if (editText !== '') {
+    editText !== '' ?
       update({description: editText})
-    } else {
-      update({deleted: editText})
-    }
+      : update({deleted: editText});
   };
 
-  const Text = <span onDoubleClick={() => {props.toEdit(props.todo.id);
-    console.log(1);}}>{props.todo.description}</span>;
+  const Text = <span onDoubleClick={() => props.toEdit(props.todo.id)}>{props.todo.description}</span>;
+
   const Edition = (
     <div className="editing">
       <Input
@@ -39,22 +38,29 @@ const InputTodos = (props: InputItemProps) => {
         value={editText}
         onChange={(e) => setEditText(e.target.value)}
         onPressEnter={commit}
+        autoFocus={true}
       />
-      <div>
+      <div className="iconWrapper">
         <EnterOutlined onClick={commit}/>
-        <DeleteFilled onClick={() => update({deleted:true})}/>
+        <DeleteFilled onClick={() => update({deleted: true})}/>
       </div>
     </div>
   );
 
+  const todoItemClass = classNames({
+    'input-todos': true,
+    editing: props.todo.editing,
+    completed: props.todo.completed
+  });
+
+
   return (
-    <div className="input-todos">
+    <div className={todoItemClass}>
       <Checkbox
         checked={props.todo.completed}
         onChange={e => {update({completed: e.target.checked});}}>
       </Checkbox>
       {props.todo.editing ? Edition : Text}
-
     </div>
   );
 };
