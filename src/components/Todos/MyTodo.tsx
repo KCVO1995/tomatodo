@@ -6,7 +6,8 @@ import axios from '@/config/axios';
 interface Todos {
   id: number;
   description: string;
-  completed: boolean
+  completed: boolean;
+  editing: boolean
 }
 
 const MyTodo = () => {
@@ -16,7 +17,7 @@ const MyTodo = () => {
     try {
       const response = await axios.post('todos', params);
       console.log(response.data.resource);
-      getTodo()
+      getTodo();
     } catch (e) {
       throw new Error(e);
     }
@@ -25,7 +26,10 @@ const MyTodo = () => {
   const getTodo = async () => {
     try {
       const response = await axios.get('todos');
-      setTodoList(response.data.resources);
+      const newTodos = response.data.resources.map((t: Todos) =>
+        Object.assign({}, t, {editing: false})
+      );
+      setTodoList(newTodos);
     } catch (e) {
       throw new Error(e);
     }
@@ -34,11 +38,19 @@ const MyTodo = () => {
   const updateTodo = async (id: number, params: any) => {
     try {
       const response = await axios.put(`todos/${id}`, params);
-      const newTodos = todoList.map(t => t.id === id ? response.data.resource : t);
-      setTodoList(newTodos);
+      const newTodoList = todoList.map(t => t.id === id ? response.data.resource : t);
+      setTodoList(newTodoList);
     } catch (e) {
       throw new Error(e);
     }
+  };
+
+  const toEdit = (id: number) => {
+    console.log('toEdit');
+    const newTodoList = todoList.map(t => t.id === id ?
+      Object.assign({}, t, {editing: true})
+      : Object.assign({}, t, {editing: false}));
+    setTodoList(newTodoList);
   };
 
   useEffect(() => {
@@ -51,7 +63,7 @@ const MyTodo = () => {
       <InputTodos addTodo={addTodo}/>
       {
         todoList && todoList.map(t => {
-          return <InputItem key={t.id} todo={t} updateTodo={updateTodo}/>;
+          return <InputItem key={t.id} todo={t} updateTodo={updateTodo} toEdit={toEdit}/>;
         })
       }
     </div>

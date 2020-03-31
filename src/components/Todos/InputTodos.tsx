@@ -16,7 +16,6 @@ const InputTodos = (props: InputTodosProps) => {
     } else {
       alert('请指定一个todo');
     }
-
   };
 
   return (

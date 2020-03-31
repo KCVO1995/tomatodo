@@ -1,29 +1,59 @@
-import React from 'react';
-import {Checkbox} from 'antd';
+import React, {useState} from 'react';
+import {Checkbox, Input} from 'antd';
+import {EnterOutlined, DeleteFilled} from '@ant-design/icons';
+
+
+
+type UpdateItem = { params: boolean } | { completed: boolean } | { editing: boolean }
 
 interface InputItemProps {
   todo: {
     id: number;
     description: string;
     completed: boolean
+    editing: boolean
   };
-  updateTodo: (id: number, params: { completed: boolean }) => void
+  updateTodo: (id: number, params: any) => void
+  toEdit: (id: number) => void
 }
 
 const InputTodos = (props: InputItemProps) => {
+  const [editText, setEditText] = useState(props.todo.description);
 
-  const update = (completed: boolean) => {
-    console.log(completed);
-    props.updateTodo(props.todo.id, {completed});
+  const update = (params: any) => {props.updateTodo(props.todo.id, params);};
+
+  const commit = () => {
+    if (editText !== '') {
+      update({description: editText})
+    } else {
+      update({deleted: editText})
+    }
   };
+
+  const Text = <span onDoubleClick={() => {props.toEdit(props.todo.id);
+    console.log(1);}}>{props.todo.description}</span>;
+  const Edition = (
+    <div className="editing">
+      <Input
+        placeholder="按回车键确认删除这个任务"
+        value={editText}
+        onChange={(e) => setEditText(e.target.value)}
+        suffix={<div>
+          <EnterOutlined onClick={commit}/>
+          <DeleteFilled onClick={() => update({deleted:true})}/>
+        </div>}
+        onPressEnter={commit}
+      />
+    </div>
+  );
 
   return (
     <div className="input-todos">
       <Checkbox
         checked={props.todo.completed}
-        onChange={e => {update(e.target.checked);}}>
-        <span>{props.todo.description}</span>
+        onChange={e => {update({completed: e.target.checked});}}>
       </Checkbox>
+      {props.todo.editing ? Edition : Text}
     </div>
   );
 };
