@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {Menu, Dropdown } from 'antd/es'
 import { DownOutlined } from '@ant-design/icons';
 import '@/components/Index/Index.less'
-import MyTodo from '@/components/Todos/MyTodo.tsx'
+import Todos from 'myTodos.tsx'
 
 interface Use {
   id: number
@@ -56,7 +56,7 @@ const Index = (props: any) => {
           </a>
         </Dropdown>
       </header>
-      <MyTodo />
+      <Todos />
     </div>
   );
 };
