@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Checkbox, Input} from 'antd';
 import {EnterOutlined, DeleteFilled} from '@ant-design/icons';
-
+import './InputItem.less'
 
 
 type UpdateItem = { params: boolean } | { completed: boolean } | { editing: boolean }
@@ -38,12 +38,12 @@ const InputTodos = (props: InputItemProps) => {
         placeholder="按回车键确认删除这个任务"
         value={editText}
         onChange={(e) => setEditText(e.target.value)}
-        suffix={<div>
-          <EnterOutlined onClick={commit}/>
-          <DeleteFilled onClick={() => update({deleted:true})}/>
-        </div>}
         onPressEnter={commit}
       />
+      <div>
+        <EnterOutlined onClick={commit}/>
+        <DeleteFilled onClick={() => update({deleted:true})}/>
+      </div>
     </div>
   );
 
@@ -54,6 +54,7 @@ const InputTodos = (props: InputItemProps) => {
         onChange={e => {update({completed: e.target.checked});}}>
       </Checkbox>
       {props.todo.editing ? Edition : Text}
+
     </div>
   );
 };
