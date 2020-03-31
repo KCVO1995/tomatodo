@@ -3,26 +3,21 @@ import InputTodos from '@/components/Todos/InputTodos';
 import InputItem from '@/components/Todos/InputItem';
 import './myTodos.less'
 import axios from '@/config/axios';
+import {Todo} from '@/types';
 
-interface MyTodos {
-  id: number;
-  description: string;
-  completed: boolean;
-  editing: boolean;
-  deleted: boolean;
-}
 
 const Todos = () => {
-  const [todoList, setTodoList] = useState([] as MyTodos[]);
-  const [unDeleted, setUnDeleted] = useState([] as MyTodos[]);
-  const [unCompleted, setUnCompleted] = useState([] as MyTodos[]);
-  const [complete, setComplete] = useState([] as MyTodos[]);
+  const [todoList, setTodoList] = useState([] as Todo[]);
+  // eslint-disable-next-line
+  const [unDeleted, setUnDeleted] = useState([] as Todo[]);
+  const [unCompleted, setUnCompleted] = useState([] as Todo[]);
+  const [complete, setComplete] = useState([] as Todo[]);
 
   useEffect(() => {
     const getTodo = async () => {
       try {
         const response = await axios.get('todos');
-        const newTodoList = response.data.resources.map((t: MyTodos) =>
+        const newTodoList = response.data.resources.map((t: Todo) =>
           Object.assign({}, t, {editing: false})
         );
         reset(newTodoList);
@@ -32,7 +27,7 @@ const Todos = () => {
   }, []);
 
 
-  const reset = (newTodoList: MyTodos[]) => {
+  const reset = (newTodoList: Todo[]) => {
     const deleted = newTodoList.filter(t => !t.deleted);
     setTodoList(newTodoList);
     setUnDeleted(deleted);

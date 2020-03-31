@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from './components/Login/Login';
-import SignUp from './components/SignUp/SignUp'
-import Index from './components/Index/Index'
+import SignUp from './components/SignUp/SignUp';
+import Home from './components/Home/Home';
 
 import {
   HashRouter,
@@ -11,19 +11,19 @@ import {
 
 const App = () => {
   return (
-      <HashRouter>
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/signUp">
-            <SignUp />
-          </Route>
-          <Route exact path="/">
-            <Index />
-          </Route>
-        </Switch>
-      </HashRouter>
+    <HashRouter>
+      <Switch>
+        <Route path="/login">
+          <Login/>
+        </Route>
+        <Route path="/signUp">
+          <SignUp/>
+        </Route>
+        <Route exact path="/">
+          <Home/>
+        </Route>
+      </Switch>
+    </HashRouter>
   );
 };
 

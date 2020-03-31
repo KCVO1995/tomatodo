@@ -3,7 +3,7 @@ import axios from '@/config/axios';
 import {useHistory} from 'react-router-dom';
 import {Menu, Dropdown } from 'antd/es'
 import { DownOutlined } from '@ant-design/icons';
-import '@/components/Index/Index.less'
+import '@/components/Home/Home.less'
 import Todos from '@/components/Todos/myTodos.tsx'
 
 interface Use {
@@ -17,7 +17,7 @@ interface Use {
   deleted: boolean
 }
 
-const Index = (props: any) => {
+const Home = () => {
   const history = useHistory();
 
   const [user, setUser] = useState({} as Use);
@@ -65,7 +65,7 @@ const Index = (props: any) => {
 
 
 
-export default Index;
+export default Home;
 
 
 

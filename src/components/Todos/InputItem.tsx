@@ -3,17 +3,11 @@ import {Checkbox, Input} from 'antd';
 import {EnterOutlined, DeleteFilled} from '@ant-design/icons';
 import classNames from 'classnames';
 import './InputItem.less';
+import {Todo} from '@/types';
 
-
-type UpdateItem = { params: boolean } | { completed: boolean } | { editing: boolean }
 
 interface InputItemProps {
-  todo: {
-    id: number;
-    description: string;
-    completed: boolean
-    editing: boolean
-  };
+  todo: Todo;
   updateTodo: (id: number, params: any) => void
   toEdit: (id: number) => void
 }

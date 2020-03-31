@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import {Provide} from 'react-redux'
 import './index.less';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <App />,
+    <App />,
   document.getElementById('root')
 );
 
