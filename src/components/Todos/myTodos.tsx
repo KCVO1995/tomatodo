@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import InputTodos from '@/components/Todos/InputTodos';
 import InputItem from '@/components/Todos/InputItem';
+import './myTodos.less'
 import axios from '@/config/axios';
 
 interface MyTodos {

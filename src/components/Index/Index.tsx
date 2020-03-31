@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {Menu, Dropdown } from 'antd/es'
 import { DownOutlined } from '@ant-design/icons';
 import '@/components/Index/Index.less'
-import Todos from 'myTodos.tsx'
+import Todos from '@/components/Todos/myTodos.tsx'
 
 interface Use {
   id: number
