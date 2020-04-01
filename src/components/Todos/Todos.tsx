@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import InputTodos from '@/components/Todos/InputTodos';
+import TodosInput from './TodosInput';
 import InputItem from '@/components/Todos/InputItem';
-import './myTodos.less'
+import './Todos.less'
 import axios from '@/config/axios';
 import {Todo} from '@/types';
 
@@ -60,7 +60,7 @@ const Todos = () => {
 
   return (
     <div className="todos">
-      <InputTodos addTodo={addTodo}/>
+      <TodosInput addTodo={addTodo}/>
       <main className="todoList">
         {
           todoList && unCompleted.map(t => {
