@@ -1,75 +1,51 @@
-import React, {useEffect, useState} from 'react';
-import TodosInput from './TodosInput';
-import InputItem from '@/components/Todos/InputItem';
-import './Todos.less'
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
 import axios from '@/config/axios';
 import {Todo} from '@/types';
+import {initTodos} from '@/redux/actions.ts';
 
 
-const Todos = () => {
-  const [todoList, setTodoList] = useState([] as Todo[]);
-  // eslint-disable-next-line
-  const [unDeleted, setUnDeleted] = useState([] as Todo[]);
-  const [unCompleted, setUnCompleted] = useState([] as Todo[]);
-  const [complete, setComplete] = useState([] as Todo[]);
+import './Todos.less';
+import InputItem from './TodosItem';
+import TodosInput from './TodosInput';
+
+interface TodosProps {
+  todos: Todo[]
+  completed: Todo[]
+  unCompleted: Todo[]
+  initTodos: (todos: Todo[]) => void
+  updateTodo: (id: number, params: any) => Todo[]
+  editTodo: (id: number) => Todo[]
+}
+
+const Todos = (props: TodosProps) => {
 
   useEffect(() => {
     const getTodo = async () => {
       try {
         const response = await axios.get('todos');
-        const newTodoList = response.data.resources.map((t: Todo) =>
+        const todos = response.data.resources.map((t: Todo) =>
           Object.assign({}, t, {editing: false})
         );
-        reset(newTodoList);
+        props.initTodos(todos);
       } catch (e) {throw new Error(e);}
     };
     getTodo().then();
   }, []);
 
 
-  const reset = (newTodoList: Todo[]) => {
-    const deleted = newTodoList.filter(t => !t.deleted);
-    setTodoList(newTodoList);
-    setUnDeleted(deleted);
-    setComplete(deleted.filter(t => t.completed));
-    setUnCompleted(deleted.filter(t => !t.completed));
-  };
-
-  const addTodo = async (params: {}) => {
-    try {
-      const response = await axios.post('todos', params);
-      reset([response.data.resource,...todoList])
-    } catch (e) {throw new Error(e);}
-  };
-
-  const updateTodo = async (id: number, params: any) => {
-    try {
-      const response = await axios.put(`todos/${id}`, params);
-      const newTodoList = todoList.map(t => t.id === id ? response.data.resource : t);
-      reset(newTodoList);
-    } catch (e) {throw new Error(e);}
-  };
-
-  const toEdit = (id: number) => {
-    const newTodoList = todoList.map(t => t.id === id ?
-      Object.assign({}, t, {editing: true})
-      : Object.assign({}, t, {editing: false}));
-    reset(newTodoList);
-  };
-
-
   return (
     <div className="todos">
-      <TodosInput addTodo={addTodo}/>
+      <TodosInput/>
       <main className="todoList">
         {
-          todoList && unCompleted.map(t => {
-            return <InputItem key={t.id} todo={t} updateTodo={updateTodo} toEdit={toEdit}/>;
+          props.unCompleted.map((t: Todo) => {
+            return <InputItem key={t.id} todo={t}/>;
           })
         }
         {
-          complete && complete.map(t => {
-            return <InputItem key={t.id} todo={t} updateTodo={updateTodo} toEdit={toEdit}/>;
+          props.completed.map((t: Todo) => {
+            return <InputItem key={t.id} todo={t}/>;
           })
         }
       </main>
@@ -77,4 +53,23 @@ const Todos = () => {
   );
 };
 
-export default Todos;
+
+const mapStateToProps = (state: { todos: Todo[] }, ownProps: any) => {
+  const todos = state.todos;
+  const deleted = todos.filter(t => !t.deleted);
+  const completed = deleted.filter(t => t.completed);
+  const unCompleted = deleted.filter(t => !t.completed);
+  return {
+    todos,
+    completed,
+    unCompleted,
+    ...ownProps
+  };
+};
+
+const mapDispatchToProps = {initTodos};
+
+export default connect(
+  mapStateToProps, mapDispatchToProps,
+)(Todos);
+

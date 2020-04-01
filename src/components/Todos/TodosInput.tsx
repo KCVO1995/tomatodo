@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
-import {Input} from 'antd';
 import {connect} from 'react-redux';
-import {addTodo} from '@/redux/action';
-import {EnterOutlined} from '@ant-design/icons';
+import {addTodo} from '@/redux/actions.ts';
 import axios from '@/config/axios';
 
-interface InputTodosProps {
-  addTodo: (params: { description: string }) => void
-}
+import {Input} from 'antd';
+import {EnterOutlined} from '@ant-design/icons';
+
+interface InputTodosProps {addTodo: (params: { description: string }) => void}
 
 const TodosInput = (props: InputTodosProps) => {
   const [description, setDescription] = useState('');
@@ -16,13 +15,10 @@ const TodosInput = (props: InputTodosProps) => {
     if (description !== '') {
       try {
         const response = await axios.post('todos', {description});
-        console.log(props);
         props.addTodo(response.data.resource);
         setDescription('');
       } catch (e) {throw new Error(e);}
-    } else {
-      alert('请指定一个todo');
-    }
+    } else {alert('请指定一个todo');}
   };
 
 
@@ -40,7 +36,7 @@ const TodosInput = (props: InputTodosProps) => {
 };
 
 
-const mapStateToProps = (ownProps: any) => ({
+const mapStateToProps = (ownProps: InputTodosProps) => ({
   ...ownProps
 });
 
