@@ -5,7 +5,7 @@ import {Menu, Dropdown } from 'antd/es'
 import { DownOutlined } from '@ant-design/icons';
 import '@/components/Home/Home.less'
 import Todos from '@/components/Todos/Todos'
-import Tomato from '@/components/Tomato/Tomato';
+import Tomato from '@/components/Tomato/Tomatoes';
 
 interface Use {
   id: number

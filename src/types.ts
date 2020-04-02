@@ -5,3 +5,10 @@ export interface Todo {
   editing: boolean;
   deleted: boolean;
 }
+
+export type Tomato = {
+  started_at: Date,
+  ended_at: Date,
+  description: string,
+  manually_created: true
+}

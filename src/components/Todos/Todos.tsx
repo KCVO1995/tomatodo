@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import axios from '@/config/axios';
 import {Todo} from '@/types';
-import {initTodos} from '@/redux/actions.ts';
+import {initTodos} from '@/redux/actions/todos';
 
 
 import './Todos.less';

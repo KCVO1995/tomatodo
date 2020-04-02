@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {addTodo} from '@/redux/actions.ts';
+import {addTodo} from '@/redux/actions/todos';
 import axios from '@/config/axios';
 
 import {Input} from 'antd';

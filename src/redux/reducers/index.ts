@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import todos from './todos'
-import tomato from './tomato'
+import tomatoes from './tomatoes'
 
 export default combineReducers({
   todos,
-  tomato
+  tomatoes
 })

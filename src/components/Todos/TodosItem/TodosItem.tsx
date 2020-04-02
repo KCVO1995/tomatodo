@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {updateTodo, editTodo} from '@/redux/actions.ts';
+import {updateTodo, editTodo} from '@/redux/actions/todos';
 import {connect} from 'react-redux';
 import axios from '@/config/axios';
 import {Todo} from '@/types';
