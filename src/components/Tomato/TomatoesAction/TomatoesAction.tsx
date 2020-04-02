@@ -29,7 +29,7 @@ const TomatoesAction = (props: TomatoActionProps) => {
       const startedAt = Date.parse(unfinishedTomato.started_at);
       const {duration} = unfinishedTomato;
       if (nowTime - startedAt <= duration) {
-        return <Countdown/>;
+        return <Countdown timer={duration - nowTime + startedAt}/>;
       } else if (nowTime - startedAt > duration) {
         return <Input value={editText}
                       placeholder="你刚刚完成了什么工作？"
