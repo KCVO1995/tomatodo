@@ -5,6 +5,7 @@ import {Menu, Dropdown } from 'antd/es'
 import { DownOutlined } from '@ant-design/icons';
 import '@/components/Home/Home.less'
 import Todos from '@/components/Todos/Todos'
+import Tomato from '@/components/Tomato/Tomato';
 
 interface Use {
   id: number
@@ -56,7 +57,10 @@ const Home = () => {
           </a>
         </Dropdown>
       </header>
-      <Todos />
+      <main>
+        <Tomato/>
+        <Todos />
+      </main>
     </div>
   );
 };

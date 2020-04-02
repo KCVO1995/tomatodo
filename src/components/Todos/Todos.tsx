@@ -6,8 +6,8 @@ import {initTodos} from '@/redux/actions.ts';
 
 
 import './Todos.less';
-import InputItem from './TodosItem';
-import TodosInput from './TodosInput';
+import InputItem from './TodosItem/TodosItem';
+import TodosInput from './TodosInput/TodosInput';
 
 interface TodosProps {
   todos: Todo[]
