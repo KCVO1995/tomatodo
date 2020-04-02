@@ -7,8 +7,10 @@ export interface Todo {
 }
 
 export type Tomato = {
+  id: number,
   started_at: Date,
   ended_at: Date,
+  duration: number,
   description: string,
   manually_created: true
 }
