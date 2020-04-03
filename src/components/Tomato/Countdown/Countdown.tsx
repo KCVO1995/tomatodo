@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import './Countdown.less';
 
 interface CountdownProps {
   timer: number
   onfinish: () => void
+  duration: number
 }
 
 const Countdown = (props: CountdownProps) => {
@@ -12,6 +14,7 @@ const Countdown = (props: CountdownProps) => {
   const min = Math.floor(countdown / 1000 / 60);
   const second = Math.floor(countdown / 1000 % 60);
   const timer = `${min < 10 ? `0${min}` : min} : ${second < 10 ? `0${second}` : second}`;
+  console.log(countdown, props.duration);
 
 
   useEffect(() => {
@@ -30,10 +33,13 @@ const Countdown = (props: CountdownProps) => {
     };
   }, [countdown]);
 
+  const getWidth = (1 - countdown / props.duration) * 100;
+
 
   return (
     <div className="countdown">
-      {timer}
+      <span>{timer}</span>
+      <div className="progress" style={{width: `${getWidth}%`}}/>
     </div>
   );
 };

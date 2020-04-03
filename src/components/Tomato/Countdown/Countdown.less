@@ -1,0 +1,25 @@
+@import "../../../assets/styles/helper";
+.countdown {
+  position: relative;
+  background: rgb(248, 248, 248);
+  height: 40px;
+  text-align: center;
+  font-weight: bold;
+  span {
+    position: relative;
+    font-size: 18px;
+    color: #666666;
+    z-index: 1;
+    line-height: 40px;
+  }
+  > .progress {
+    background-image: linear-gradient(to bottom,#F8F8F8 0,#EEE 100%);
+    border-radius: 3px 0 0 3px;
+    border-right: 1px solid rgba(212,212,212,.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 0;
+  }
+}

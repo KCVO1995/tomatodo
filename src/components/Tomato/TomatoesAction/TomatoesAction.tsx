@@ -49,7 +49,8 @@ const TomatoesAction = (props: TomatoActionProps) => {
 
   const HTML = () => {
     if (!props.unfinishedTomato) {
-      return <Button onClick={props.startTomato}>开始一个番茄</Button>;
+      return <Button onClick={props.startTomato}
+                     className="startTomato">开始一个番茄</Button>;
     } else {
       const {unfinishedTomato} = props;
       // @ts-ignore
@@ -61,13 +62,15 @@ const TomatoesAction = (props: TomatoActionProps) => {
         return (
           <div className="timer-wrapper">
             <Countdown timer={duration - nowTime + startedAt}
-                       onfinish={onfinish}/>
+                       onfinish={onfinish}
+                       duration={duration}
+            />
             <CloseCircleOutlined className="abort" onClick={showConfirm}/>
           </div>
         );
       } else if (nowTime - startedAt > duration) {
         return (
-          <div>
+          <div className="input-wrapper">
             <Input value={editText}
                    placeholder="你刚刚完成了什么工作？"
                    onChange={e => setEditText(e.target.value)}
