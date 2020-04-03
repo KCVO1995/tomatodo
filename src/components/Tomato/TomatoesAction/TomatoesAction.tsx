@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import {Button, Input} from 'antd';
 import {Tomato} from '@/types';
 import Countdown from '@/components/Tomato/Countdown/Countdown';
+import {CloseCircleOutlined} from '@ant-design/icons';
+import {Modal} from 'antd';
+import './TomatoesAction.less';
 
 interface TomatoActionProps {
   startTomato: () => void
@@ -16,9 +19,9 @@ const TomatoesAction = (props: TomatoActionProps) => {
     const {id} = props.unfinishedTomato;
     props.updateTomato(id, {description: editText, ended_at: new Date()});
     // updateTomato 可能网络延迟，避免用户看到空的input
-    setTimeout(()=> {
+    setTimeout(() => {
       setEditText('');
-    }, 500)
+    }, 500);
   };
 
   const onfinish = () => {
@@ -27,6 +30,22 @@ const TomatoesAction = (props: TomatoActionProps) => {
     setEditText('');
   };
 
+  const abortTomato = () => {
+    const {id} = props.unfinishedTomato;
+    props.updateTomato(id, {aborted: true});
+  };
+
+  const {confirm} = Modal;
+  const showConfirm = () => {
+    confirm({
+      title: '您目前正在一个番茄工作时间中，要放弃这个番茄吗？',
+      width: 500,
+      mask: true,
+      keyboard: true,
+      onOk() {abortTomato();},
+      onCancel() {},
+    });
+  };
 
   const HTML = () => {
     if (!props.unfinishedTomato) {
@@ -39,14 +58,24 @@ const TomatoesAction = (props: TomatoActionProps) => {
       const startedAt = Date.parse(unfinishedTomato.started_at);
       const {duration} = unfinishedTomato;
       if (nowTime - startedAt <= duration) {
-        return <Countdown timer={duration - nowTime + startedAt}
-                          onfinish={onfinish}/>;
+        return (
+          <div className="timer-wrapper">
+            <Countdown timer={duration - nowTime + startedAt}
+                       onfinish={onfinish}/>
+            <CloseCircleOutlined className="abort" onClick={showConfirm}/>
+          </div>
+        );
       } else if (nowTime - startedAt > duration) {
-        return <Input value={editText}
-                      placeholder="你刚刚完成了什么工作？"
-                      onChange={e => setEditText(e.target.value)}
-                      onPressEnter={commit}
-        />;
+        return (
+          <div>
+            <Input value={editText}
+                   placeholder="你刚刚完成了什么工作？"
+                   onChange={e => setEditText(e.target.value)}
+                   onPressEnter={commit}
+            />
+            <CloseCircleOutlined className="abort" onClick={showConfirm}/>
+          </div>
+        );
       }
     }
   };

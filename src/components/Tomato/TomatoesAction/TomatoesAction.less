@@ -1,0 +1,22 @@
+@color: #a9a9a9;
+.timer-wrapper {
+  position: relative;
+  padding: 6.5px 11px;
+  border: 1px solid @color;
+  border-radius: 1px;
+
+  > .abort {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    z-index: 1;
+    background: white;
+
+    svg {
+      width: 17px;
+      height: 17px;
+      fill: @color;
+    }
+  }
+}

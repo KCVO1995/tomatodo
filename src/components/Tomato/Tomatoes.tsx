@@ -32,7 +32,7 @@ const Tomatoes = (props: TomatoProps) => {
 
   const startTomato = async () => {
     try {
-      const response = await axios.post('tomatoes', {duration: 5000});
+      const response = await axios.post('tomatoes', {duration: 1500000});
       props.startTomato(response.data.resource);
     } catch (e) {throw new Error(e);}
   };
