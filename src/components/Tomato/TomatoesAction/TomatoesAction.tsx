@@ -27,6 +27,7 @@ const TomatoesAction = (props: TomatoActionProps) => {
       const nowTime = Date.parse(new Date());
       // @ts-ignore
       const startedAt = Date.parse(unfinishedTomato.started_at);
+      console.log(startedAt, new Date());
       const {duration} = unfinishedTomato;
       if (nowTime - startedAt <= duration) {
         return <Countdown timer={duration - nowTime + startedAt}/>;

@@ -6,12 +6,22 @@ interface CountdownProps {
 
 const Countdown = (props: CountdownProps) => {
   const [countdown, setCountdown] = useState(props.timer);
+
+  let timerId: NodeJS.Timeout;
+
   useEffect(() => {
-    setInterval(() => {
+    timerId = setInterval(() => {
       const time = (countdown - 1000);
       setCountdown(time);
+      if (time < 0) {
+        clearInterval(timerId);
+      }
     }, 1000);
+    return () => {
+      clearInterval(timerId);
+    };
   }, [countdown]);
+
 
   const min = Math.floor(countdown / 1000 / 60);
   const second = Math.floor(countdown / 1000 % 60);

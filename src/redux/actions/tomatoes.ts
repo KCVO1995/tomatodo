@@ -4,4 +4,4 @@ import {Tomato} from '@/types';
 
 export const startTomato = (payload: Tomato[]) => ({type: START_TOMATO, payload});
 export const initTomatoes = (payload: Tomato[]) => ({type: INIT_TOMATOES, payload});
-export const updateTomatoes = (payload: Tomato[]) => ({type: UPDATE_TOMATO, payload});
+export const updateTomato = (payload: Tomato) => ({type: UPDATE_TOMATO, payload});

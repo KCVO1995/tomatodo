@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import axios from '@/config/axios';
-import {startTomato, initTomatoes, updateTomatoes} from '@/redux/actions/tomatoes';
+import {startTomato, initTomatoes, updateTomato} from '@/redux/actions/tomatoes';
 import {connect} from 'react-redux';
 
 
@@ -13,7 +13,7 @@ interface TomatoProps {
   unfinishedTomato: Tomato
   startTomato: (payload: Tomato) => void
   initTomatoes: (payload: Tomato[]) => void
-  updateTomatoes: (payload: Tomato) => void
+  updateTomato: (payload: Tomato) => void
 }
 
 
@@ -41,8 +41,7 @@ const Tomatoes = (props: TomatoProps) => {
   const updateTomato = async (id: number, params: any) => {
     try {
       const response = await axios.put(`tomatoes/${id}`, params);
-      console.log(response.data.resource);
-      props.updateTomatoes(response.data.resource);
+      props.updateTomato(response.data.resource);
     } catch (e) {throw new Error(e);}
   };
 
@@ -65,7 +64,7 @@ const mapStateToProps = (state: { tomatoes: Tomato[] }, ownProps: any) => {
   return {
     tomatoes,
     unfinishedTomato,
-    updateTomatoes,
+    updateTomato,
     ...ownProps
   };
 };
