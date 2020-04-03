@@ -20,7 +20,6 @@ interface InputItemProps {
 const TodosItem = (props: InputItemProps) => {
   const [editText, setEditText] = useState(props.todo.description);
 
-
   const commit = () => {
     editText !== '' ? updateTodo({description: editText}) : updateTodo({deleted: true});};
 

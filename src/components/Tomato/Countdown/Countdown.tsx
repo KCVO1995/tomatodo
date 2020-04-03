@@ -2,18 +2,26 @@ import React, {useEffect, useState} from 'react';
 
 interface CountdownProps {
   timer: number
+  onfinish: () => void
 }
 
 const Countdown = (props: CountdownProps) => {
   const [countdown, setCountdown] = useState(props.timer);
 
   let timerId: NodeJS.Timeout;
+  const min = Math.floor(countdown / 1000 / 60);
+  const second = Math.floor(countdown / 1000 % 60);
+  const timer = `${min < 10 ? `0${min}` : min} : ${second < 10 ? `0${second}` : second}`;
+
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     timerId = setInterval(() => {
-      const time = (countdown - 1000);
-      setCountdown(time);
-      if (time < 0) {
+      document.title = `${timer} - Tomatodo`;
+      setCountdown(countdown - 1000);
+      if (countdown < 1000) {
+        document.title = `Tomatodo`;
+        props.onfinish();
         clearInterval(timerId);
       }
     }, 1000);
@@ -22,10 +30,6 @@ const Countdown = (props: CountdownProps) => {
     };
   }, [countdown]);
 
-
-  const min = Math.floor(countdown / 1000 / 60);
-  const second = Math.floor(countdown / 1000 % 60);
-  const timer = `${min < 10 ? `0${min}` : min} : ${second < 10 ? `0${second}` : second}`;
 
   return (
     <div className="countdown">

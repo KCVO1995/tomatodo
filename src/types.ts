@@ -12,5 +12,6 @@ export type Tomato = {
   ended_at: Date,
   duration: number,
   description: string,
-  manually_created: true
+  manually_created: boolean
+  aborted: boolean
 }

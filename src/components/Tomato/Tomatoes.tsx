@@ -19,7 +19,6 @@ interface TomatoProps {
 
 const Tomatoes = (props: TomatoProps) => {
 
-
   useEffect(() => {
     const getTomatoes = async () => {
       try {
@@ -33,7 +32,7 @@ const Tomatoes = (props: TomatoProps) => {
 
   const startTomato = async () => {
     try {
-      const response = await axios.post('tomatoes', {duration: 1500000});
+      const response = await axios.post('tomatoes', {duration: 5000});
       props.startTomato(response.data.resource);
     } catch (e) {throw new Error(e);}
   };
@@ -58,17 +57,15 @@ const Tomatoes = (props: TomatoProps) => {
 
 const mapStateToProps = (state: { tomatoes: Tomato[] }, ownProps: any) => {
   const tomatoes = state.tomatoes;
-  const unfinishedTomato = state.tomatoes.filter(t => !t.description && !t.ended_at)[0];
-  console.log(unfinishedTomato);
+  const unfinishedTomato = state.tomatoes.filter(t => !t.description && !t.ended_at && !t.aborted)[0];
   // @ts-ignore
   return {
     tomatoes,
     unfinishedTomato,
-    updateTomato,
     ...ownProps
   };
 };
 
-const mapDispatchToProps = {startTomato, initTomatoes};
+const mapDispatchToProps = {startTomato, initTomatoes, updateTomato};
 
 export default connect(mapStateToProps, mapDispatchToProps,)(Tomatoes);

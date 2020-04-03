@@ -8,9 +8,8 @@ const tomatoes = (state: Tomato[] = [], action: any) => {
     case INIT_TOMATOES:
       return action.payload;
     case UPDATE_TOMATO:
-      console.log(action.payload);
-      return state.map(t => t.id === action.payload.id ?
-      action.payload : t);
+      console.log('update');
+      return state.map(t => t.id === action.payload.id ? action.payload : t);
     default:
       return state;
   }

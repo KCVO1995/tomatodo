@@ -15,8 +15,18 @@ const TomatoesAction = (props: TomatoActionProps) => {
   const commit = () => {
     const {id} = props.unfinishedTomato;
     props.updateTomato(id, {description: editText, ended_at: new Date()});
+    // updateTomato 可能网络延迟，避免用户看到空的input
+    setTimeout(()=> {
+      setEditText('');
+    }, 500)
+  };
+
+  const onfinish = () => {
+    // 为了代替 forceUpdate 的曲线救国
+    setEditText(' ');
     setEditText('');
   };
+
 
   const HTML = () => {
     if (!props.unfinishedTomato) {
@@ -27,10 +37,10 @@ const TomatoesAction = (props: TomatoActionProps) => {
       const nowTime = Date.parse(new Date());
       // @ts-ignore
       const startedAt = Date.parse(unfinishedTomato.started_at);
-      console.log(startedAt, new Date());
       const {duration} = unfinishedTomato;
       if (nowTime - startedAt <= duration) {
-        return <Countdown timer={duration - nowTime + startedAt}/>;
+        return <Countdown timer={duration - nowTime + startedAt}
+                          onfinish={onfinish}/>;
       } else if (nowTime - startedAt > duration) {
         return <Input value={editText}
                       placeholder="你刚刚完成了什么工作？"
