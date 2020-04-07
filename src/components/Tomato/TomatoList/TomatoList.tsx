@@ -30,8 +30,7 @@ const TomatoList = (props: TomatoListProps) => {
 
   const getDates = () => {
     const dates = Object.keys(props.finishedTomatoes);
-    dates.sort((a, b) => Date.parse(b) - Date.parse(a));
-    return dates;
+    return dates.sort((a, b) => Date.parse(b) - Date.parse(a)).splice(0,3);
   };
 
 
