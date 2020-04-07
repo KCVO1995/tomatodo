@@ -1,47 +1,62 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './Countdown.less';
 
-interface CountdownProps {
-  timer: number
+interface ICountDownProps {
+  timer: number,
+  duration: number,
   onfinish: () => void
-  duration: number
 }
 
-const Countdown = (props: CountdownProps) => {
-  const [countdown, setCountdown] = useState(props.timer);
+interface IContDownStates {
+  restTime: number
+}
 
-  let timerId: NodeJS.Timeout;
-  const min = Math.floor(countdown / 1000 / 60);
-  const second = Math.floor(countdown / 1000 % 60);
-  const timer = `${min < 10 ? `0${min}` : min} : ${second < 10 ? `0${second}` : second}`;
-  console.log(countdown, props.duration);
+let timerID: NodeJS.Timeout;
 
+class CountDown extends React.Component <ICountDownProps, IContDownStates> {
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    timerId = setInterval(() => {
-      document.title = `${timer} - Tomatodo`;
-      setCountdown(countdown - 1000);
-      if (countdown < 1000) {
-        document.title = `Tomatodo`;
-        props.onfinish();
-        clearInterval(timerId);
-      }
-    }, 1000);
-    return () => {
-      clearInterval(timerId);
+  constructor(props: ICountDownProps) {
+    super(props);
+    this.state = {
+      restTime: this.props.timer
     };
-  }, [countdown]);
+  };
 
-  const getWidth = (1 - countdown / props.duration) * 100;
+  componentDidMount(): void {this.startCountDown();};
 
+  componentWillUnmount(): void {this.onTimeOver();};
 
-  return (
-    <div className="countdown">
-      <span>{timer}</span>
-      <div className="progress" style={{width: `${getWidth}%`}}/>
-    </div>
-  );
-};
+  get clock() {
+    const minutes = Math.floor(this.state.restTime / 1000 / 60);
+    const seconds = Math.floor(this.state.restTime / 1000 % 60);
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
 
-export default Countdown;
+  startCountDown = () => {
+    timerID = setInterval(() => {
+      const restTime = this.state.restTime;
+      this.setState({restTime: restTime - 1000});
+      document.title = `${this.clock} - 有一个番茄正在进行`;
+
+      if (restTime < 1000) {this.onTimeOver();}
+
+    }, 1000);
+  };
+
+  onTimeOver = () => {
+    this.props.onfinish();
+    clearInterval(timerID);
+  };
+
+  public render() {
+    const percent = 1 - this.state.restTime / this.props.duration;
+    return (
+      <div className="countdown">
+        <span>{this.clock}</span>
+        <div className="progress" style={{width: `${percent * 100}%`}}/>
+      </div>
+    );
+  }
+}
+
+export default CountDown;
