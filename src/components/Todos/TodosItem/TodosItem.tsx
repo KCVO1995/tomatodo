@@ -63,7 +63,7 @@ const TodosItem = (props: InputItemProps) => {
     <div className={todoItemClass}>
       <Checkbox
         checked={props.todo.completed}
-        onChange={e => {updateTodo({completed: e.target.checked});}}>
+        onChange={e => {updateTodo({completed: e.target.checked, completed_at: new Date()});}}>
       </Checkbox>
       {props.todo.editing ? Edition : Text}
     </div>

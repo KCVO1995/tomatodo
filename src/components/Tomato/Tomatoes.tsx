@@ -27,7 +27,6 @@ const Tomatoes = (props: TomatoProps) => {
     const getTomatoes = async () => {
       try {
         const response = await axios.get('tomatoes');
-        console.log(response.data.resources);
         props.initTomatoes(response.data.resources);
       } catch (e) {throw new Error(e);}
     };
