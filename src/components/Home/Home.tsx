@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import {format} from "date-fns";
 import {initTomatoes} from '@/redux/actions/tomatoes';
+import Statistics from '@/components/Statistics/Statistics';
 
 interface Use {
   id: number
@@ -98,6 +99,7 @@ const Home = (props: HomeProps) => {
         <Tomatoes finishedTomato={props.finishedTomato} unfinishedTomato={props.unfinishedTomato}/>
         <Todos  completed={props.completed} unCompleted={props.unCompleted}/>
       </main>
+      <Statistics completed={props.completed}/>
     </div>
   );
 };
