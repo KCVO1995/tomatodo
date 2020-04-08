@@ -11,23 +11,20 @@ const Polygon = (props: PolygonProps) => {
     const dates = Object.keys(props.dailyTodo).sort((a, b) => {
       return Date.parse(a) - Date.parse(b);
     });
-    const firstDay = dates[0];
+    const firstDay = Date.parse(dates[0]) - 24 * 60 * 60 *1000;
     if (firstDay) {
-      const lastDay = dates[dates.length - 1];
-      let range = Date.parse(lastDay) - Date.parse(firstDay);
-      if (firstDay === lastDay) {
-        range = 1
-      }
+      const range = new Date().getTime() - firstDay;
       let finishedCount = 0;
       const pointArr = dates.map(date => {
-        const x = (Date.parse(date) - Date.parse(firstDay)) / range * 240;
-        console.log(Date.parse(date),Date.parse(firstDay));
+        let x = (Date.parse(date) - firstDay) / range * 240;
+        if (range) {x = 240}
         // @ts-ignore
         finishedCount += props.dailyTodo[date].length;
-        const y = (1 - finishedCount / props.totalCompleted) * 60;
+        console.log(finishedCount);
+        const y = (1 - finishedCount/props.totalCompleted) * 60;
         return `${x},${y}`;
       });
-      return ['0,60', ...pointArr, '240,60'].join(' ');
+      return ['0,60', ...pointArr,'240,0','240,60'].join(' ');
     } else {
       return '0,60 240,60';
     }
