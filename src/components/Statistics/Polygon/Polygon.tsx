@@ -20,7 +20,6 @@ const Polygon = (props: PolygonProps) => {
         if (range) {x = 240}
         // @ts-ignore
         finishedCount += props.dailyTodo[date].length;
-        console.log(finishedCount);
         const y = (1 - finishedCount/props.totalCompleted) * 60;
         return `${x},${y}`;
       });

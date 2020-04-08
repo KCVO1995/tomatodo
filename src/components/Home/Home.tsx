@@ -28,6 +28,7 @@ interface Use {
 
 interface HomeProps {
   initTodos: (todos: Todo[]) => void
+  deleted: Todo[]
   completed: Todo[]
   unCompleted: Todo[]
   unfinishedTomato: Tomato[]
@@ -99,17 +100,17 @@ const Home = (props: HomeProps) => {
         <Tomatoes finishedTomato={props.finishedTomato} unfinishedTomato={props.unfinishedTomato}/>
         <Todos  completed={props.completed} unCompleted={props.unCompleted}/>
       </main>
-      <Statistics completed={props.completed}/>
+      <Statistics completed={props.completed} deleted={props.deleted}/>
     </div>
   );
 };
 
 const mapStateToProps = (state: { todos: Todo[],tomatoes: Tomato[] }, ownProps: any) => {
   const todos = state.todos;
-  const deleted = todos.filter(t => !t.deleted);
-  const completed = deleted.filter(t => t.completed) || [];
-  const unCompleted = deleted.filter(t => !t.completed) || [];
-
+  const deleted = todos.filter(t => t.deleted);
+  const unDeleted = todos.filter(t => !t.deleted);
+  const completed = unDeleted.filter(t => t.completed) || [];
+  const unCompleted = unDeleted.filter(t => !t.completed) || [];
   const tomatoes = state.tomatoes;
   const unfinishedTomato = state.tomatoes.filter(t => !t.description && !t.ended_at && !t.aborted)[0];
   const getfinishedTomato = () => {
@@ -121,6 +122,7 @@ const mapStateToProps = (state: { todos: Todo[],tomatoes: Tomato[] }, ownProps: 
   const finishedTomato = getfinishedTomato();
   return {
     todos,
+    deleted,
     completed,
     unCompleted,
     tomatoes,
