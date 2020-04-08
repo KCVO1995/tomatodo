@@ -61,8 +61,11 @@ const Home = (props: HomeProps) => {
   const getTomatoes = async () => {
     try {
       const response = await axios.get('tomatoes');
-      console.log(response.data.resources);
-      props.initTomatoes(response.data.resources);
+      const tomatoes = response.data.resources.map((t: Todo) =>
+        Object.assign({}, t, {editing: false})
+      );
+      console.log(tomatoes);
+      props.initTomatoes(tomatoes);
     } catch (e) {throw new Error(e);}
   };
 
