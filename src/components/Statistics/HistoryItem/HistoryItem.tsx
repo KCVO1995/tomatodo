@@ -1,7 +1,7 @@
 import {Todo} from '@/types';
 import {format} from 'date-fns';
 import React from 'react';
-import './TodoHistoryItem.less';
+import './HistoryItem.less';
 import {updateTodo} from '@/redux/actions/todos';
 import {connect} from 'react-redux';
 import axios from '@/config/axios';
@@ -12,7 +12,7 @@ interface TodoHistoryItemProps {
   updateTodo: (payload: Todo) => void
 }
 
-const TodoHistoryItem = (props: TodoHistoryItemProps) => {
+const HistoryItem = (props: TodoHistoryItemProps) => {
 
   console.log(props.data);
 
@@ -89,5 +89,5 @@ const mapDispatchToProps = {
   updateTodo,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps,)(TodoHistoryItem);
+export default connect(mapStateToProps, mapDispatchToProps,)(HistoryItem);
 

@@ -2,9 +2,9 @@ import React from 'react';
 import {Tabs} from 'antd';
 import {Todo, Tomato} from '@/types';
 import _ from 'lodash';
-import {format, differenceInHours, differenceInMinutes, parseISO} from 'date-fns';
+import {format, differenceInMinutes, parseISO} from 'date-fns';
 import './History.less';
-import TodoHistoryItem from '@/components/Statistics/TodoHistoryItem/TodoHistoryItem';
+import HistoryItem from '@/components/Statistics/HistoryItem/HistoryItem';
 
 const {TabPane} = Tabs;
 
@@ -44,7 +44,7 @@ const History = (props: TodoHistoryProps) => {
         <div className="items">
           {
             todos.map((todo) => {
-              return <TodoHistoryItem data={todo} key={todo.id} itemType="completed"/>;
+              return <HistoryItem data={todo} key={todo.id} itemType="completed"/>;
             })
           }
         </div>
@@ -53,7 +53,7 @@ const History = (props: TodoHistoryProps) => {
   });
 
   const deletedList = props.deleted.map(todo => {
-    return (<TodoHistoryItem data={todo} key={todo.id} itemType="deleted"/>);
+    return (<HistoryItem data={todo} key={todo.id} itemType="deleted"/>);
   });
 
   const finishedTomatoList = getDates(props.finishedTomatoGroup).map(date => {
@@ -64,7 +64,7 @@ const History = (props: TodoHistoryProps) => {
       min += differenceInMinutes(parseISO(tomato.ended_at.toString()), parseISO(tomato.started_at.toString()));
     });
     const minText = () => {return ` ${min % 60} 分钟`;};
-    const hourText = Math.floor(min / 60) < 1 ? '' : ` ${Math.floor(min / 60)} 小时`
+    const hourText = Math.floor(min / 60) < 1 ? '' : ` ${Math.floor(min / 60)} 小时`;
     return (
       <div key={date} className="list">
         <div className="title">
@@ -81,7 +81,7 @@ const History = (props: TodoHistoryProps) => {
         <div className="items">
           {
             tomatoes.map((tomato: Tomato) => {
-              return <TodoHistoryItem data={tomato} key={tomato.id} itemType="finishedToamto"/>;
+              return <HistoryItem data={tomato} key={tomato.id} itemType="finishedToamto"/>;
             })
           }
         </div>
@@ -90,21 +90,44 @@ const History = (props: TodoHistoryProps) => {
   });
 
   const abortTomatoList = props.abortTomatoes.map(tomato => {
-    return (<TodoHistoryItem data={tomato} key={tomato.id} itemType="abortTomato"/>);
+    return (<HistoryItem data={tomato} key={tomato.id} itemType="abortTomato"/>);
   });
 
+  const list = () => {
+    if (props.historyType === 'todo') {
+      console.log(1);
+      return (
+        <div className="todo-history">
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="已完成任务" key="1">
+              {completedList}
+            </TabPane>
+            <TabPane tab="已删除任务" key="2">
+              {deletedList}
+            </TabPane>
+          </Tabs>
+        </div>
+      );
+    } else if (props.historyType === 'tomato') {
+      return (
+        <div className="todo-history">
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="完成的番茄" key="1">
+              {finishedTomatoList}
+            </TabPane>
+            <TabPane tab="被打断的番茄" key="2">
+              {abortTomatoList}
+            </TabPane>
+          </Tabs>
+        </div>
+      );
+    }
+  };
 
   return (
-    <div className="todo-history">
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="已完成任务" key="1">
-          {finishedTomatoList}
-        </TabPane>
-        <TabPane tab="已删除任务" key="2">
-          {abortTomatoList}
-        </TabPane>
-      </Tabs>
-    </div>
+    <>
+      {list()}
+    </>
   );
 };
 
