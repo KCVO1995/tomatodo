@@ -34,6 +34,7 @@ interface HomeProps {
   unfinishedTomatoes: Tomato[]
   abortTomatoes: Tomato[]
   finishedTomatoGroup: {}
+  finishedTomatoes: Tomato[]
   initTomatoes: (payload: Tomato[]) => void
 }
 
@@ -105,6 +106,7 @@ const Home = (props: HomeProps) => {
       <Statistics completed={props.completed}
                   deleted={props.deleted}
                   finishedTomatoGroup={props.finishedTomatoGroup}
+                  finishedTomatoes={props.finishedTomatoes}
                   abortTomatoes={props.abortTomatoes}
       />
     </div>
@@ -120,9 +122,9 @@ const mapStateToProps = (state: { todos: Todo[], tomatoes: Tomato[] }, ownProps:
   const tomatoes = state.tomatoes;
   const abortTomatoes = state.tomatoes.filter(t => t.aborted && !t.ended_at);
   const unfinishedTomatoes = state.tomatoes.filter(t => !t.description && !t.ended_at && !t.aborted);
+  const finishedTomatoes = state.tomatoes.filter(t => t.description && t.ended_at && !t.aborted);
   const getfinishedTomatoGroup = () => {
-    const finished = state.tomatoes.filter(t => t.description && t.ended_at && !t.aborted);
-    return _.groupBy(finished, (tomato) => {
+    return _.groupBy(finishedTomatoes, (tomato) => {
       return format(new Date(tomato.started_at), 'yyyy-MM-d');
     });
   };
@@ -135,6 +137,7 @@ const mapStateToProps = (state: { todos: Todo[], tomatoes: Tomato[] }, ownProps:
     tomatoes,
     unfinishedTomatoes,
     finishedTomatoGroup,
+    finishedTomatoes,
     abortTomatoes,
     ...ownProps
   };

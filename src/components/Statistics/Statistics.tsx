@@ -10,6 +10,7 @@ interface StatisticsProps {
   completed: Todo[]
   deleted: Todo[]
   finishedTomatoGroup: {}
+  finishedTomatoes: Tomato[]
   abortTomatoes: Tomato[]
 }
 
@@ -43,15 +44,15 @@ const Statistics = (props: StatisticsProps) => {
             className={toggle === 'tomato' ? 'active' : ''}>
           <div className="text">
             <span className="title">番茄历史</span>
-            <span>累计完成任务</span>
-            <span className="count">{props.completed.length}</span>
+            <span>累计完成番茄</span>
+            <span className="count">{props.finishedTomatoes.length}</span>
           </div>
-          <Polygon dailyTodo={dailyTodo()} totalCompleted={props.completed.length}/>
+          <Polygon dailyTodo={props.finishedTomatoGroup} totalCompleted={props.finishedTomatoes.length}/>
         </li>
         <li onClick={() => setToggle('todo')}
             className={toggle === 'todo' ? 'active' : ''}>
           <div className="text">
-            <span className="title">番茄历史</span>
+            <span className="title">任务历史</span>
             <span>累计完成任务</span>
             <span className="count">{props.completed.length}</span>
           </div>
