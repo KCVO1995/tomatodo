@@ -6,6 +6,7 @@
   display: flex;
   color: #999;
   > .title {
+    margin-right: 25px;
     .date {
       color: #333;
       width: 100px;
@@ -13,17 +14,5 @@
       margin-bottom: 10px;
     }
   }
-  .items {
-    > .item {
-      margin-left: 25px;
-      margin-bottom: 10px;
-      display: block;
-      color: #333;
-      > .time {
-        color: #999;
-        margin-right: 8px;
-      }
-    }
-  }
-
+  .items {flex-grow: 1;}
 }

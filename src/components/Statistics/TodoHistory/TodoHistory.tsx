@@ -3,7 +3,8 @@ import {Tabs} from 'antd';
 import {Todo} from '@/types';
 import _ from 'lodash';
 import {format} from 'date-fns';
-import './TodoHistory.less'
+import './TodoHistory.less';
+import TodoHistoryItem from '@/components/Statistics/TodoHistoryItem/TodoHistoryItem';
 
 const {TabPane} = Tabs;
 
@@ -12,18 +13,6 @@ interface TodoHistoryProps {
   deleted: Todo[]
 }
 
-interface TodoHistoryItemProps {
-  todo: Todo
-}
-
-const TodoHistoryItem = (props: TodoHistoryItemProps) => {
-  return (
-    <div className="item">
-      <span className="time">{format(new Date(props.todo.updated_at), 'HH:mm')}</span>
-      <span>{props.todo.description}</span>
-    </div>
-  );
-};
 
 const TodoHistory = (props: TodoHistoryProps) => {
 
@@ -34,7 +23,7 @@ const TodoHistory = (props: TodoHistoryProps) => {
   };
 
   const getDeletedGroup = () => {
-    return  _.groupBy(props.deleted, (todo) => {
+    return _.groupBy(props.deleted, (todo) => {
       return format(new Date(todo.updated_at), 'yyyy-MM-d');
     });
   };
@@ -43,7 +32,6 @@ const TodoHistory = (props: TodoHistoryProps) => {
   const getDates = (group: {}) => {
     return Object.keys(group).sort((a, b) => Date.parse(b) - Date.parse(a));
   };
-
 
 
   console.log(getCompletedGroup());
@@ -64,7 +52,7 @@ const TodoHistory = (props: TodoHistoryProps) => {
         <div className="items">
           {
             todos.map((todo) => {
-              return <TodoHistoryItem todo={todo}/>;
+              return <TodoHistoryItem todo={todo} key={todo.id} itemType="completed"/>;
             })
           }
         </div>
@@ -72,26 +60,8 @@ const TodoHistory = (props: TodoHistoryProps) => {
     );
   });
 
-  const deletedList = getDates(getDeletedGroup()).map(date => {
-    const todos = getDeletedGroup()[date];
-    return (
-      <div key={date} className="list">
-        <div className="title">
-          <div>
-            <span className="date">{format(new Date(date), 'M月d日')}</span>
-            <span>{format(new Date(date), 'E')}</span>
-          </div>
-          <span>完成了 {todos.length} 个任务</span>
-        </div>
-        <div className="items">
-          {
-            todos.map((todo) => {
-              return <TodoHistoryItem todo={todo}/>;
-            })
-          }
-        </div>
-      </div>
-    );
+  const deletedList = props.deleted.map(todo => {
+    return (<TodoHistoryItem todo={todo} key={todo.id} itemType="deleted"/>);
   });
 
   return (
