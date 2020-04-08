@@ -4,7 +4,7 @@ import {format} from 'date-fns';
 import './TomatoList.less'
 
 interface TomatoListProps {
-  finishedTomatoes: {}
+  finishedTomatoGroup: {}
 }
 
 interface TomatoItemProps {
@@ -26,8 +26,9 @@ const TomatoItem = (props: TomatoItemProps) => {
 
 const TomatoList = (props: TomatoListProps) => {
 
+
   const getDates = () => {
-    const dates = Object.keys(props.finishedTomatoes);
+    const dates = Object.keys(props.finishedTomatoGroup);
     return dates.sort((a, b) => Date.parse(b) - Date.parse(a)).splice(0,3);
   };
 
@@ -35,7 +36,7 @@ const TomatoList = (props: TomatoListProps) => {
 
   const list = getDates().map((date) => {
     // @ts-ignore
-    const tomatoes = props.finishedTomatoes[date];
+    const tomatoes = props.finishedTomatoGroup[date];
     return (
       <div key={date} className="tomato">
         <div className="title">

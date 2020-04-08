@@ -10,7 +10,7 @@ import {Todo, Tomato} from '@/types';
 import {initTodos} from '@/redux/actions/todos';
 import {connect} from 'react-redux';
 import _ from 'lodash';
-import {format} from "date-fns";
+import {format} from 'date-fns';
 import {initTomatoes} from '@/redux/actions/tomatoes';
 import Statistics from '@/components/Statistics/Statistics';
 
@@ -31,8 +31,9 @@ interface HomeProps {
   deleted: Todo[]
   completed: Todo[]
   unCompleted: Todo[]
-  unfinishedTomato: Tomato[]
-  finishedTomato: {}
+  unfinishedTomatoes: Tomato[]
+  abortTomatoes: Tomato[]
+  finishedTomatoGroup: {}
   initTomatoes: (payload: Tomato[]) => void
 }
 
@@ -59,14 +60,15 @@ const Home = (props: HomeProps) => {
   const getTomatoes = async () => {
     try {
       const response = await axios.get('tomatoes');
+      console.log(response.data.resources);
       props.initTomatoes(response.data.resources);
     } catch (e) {throw new Error(e);}
   };
 
-  useEffect( () => {
+  useEffect(() => {
     getMe();
     getTodo();
-    getTomatoes()
+    getTomatoes();
   }, []);
 
   const logout = () => {
@@ -97,42 +99,48 @@ const Home = (props: HomeProps) => {
         </Dropdown>
       </header>
       <main>
-        <Tomatoes finishedTomato={props.finishedTomato} unfinishedTomato={props.unfinishedTomato}/>
-        <Todos  completed={props.completed} unCompleted={props.unCompleted}/>
+        <Tomatoes finishedTomatoGroup={props.finishedTomatoGroup} unfinishedTomatoes={props.unfinishedTomatoes}/>
+        <Todos completed={props.completed} unCompleted={props.unCompleted}/>
       </main>
-      <Statistics completed={props.completed} deleted={props.deleted}/>
+      <Statistics completed={props.completed}
+                  deleted={props.deleted}
+                  finishedTomatoGroup={props.finishedTomatoGroup}
+                  abortTomatoes={props.abortTomatoes}
+      />
     </div>
   );
 };
 
-const mapStateToProps = (state: { todos: Todo[],tomatoes: Tomato[] }, ownProps: any) => {
+const mapStateToProps = (state: { todos: Todo[], tomatoes: Tomato[] }, ownProps: any) => {
   const todos = state.todos;
   const deleted = todos.filter(t => t.deleted);
   const unDeleted = todos.filter(t => !t.deleted);
   const completed = unDeleted.filter(t => t.completed) || [];
   const unCompleted = unDeleted.filter(t => !t.completed) || [];
   const tomatoes = state.tomatoes;
-  const unfinishedTomato = state.tomatoes.filter(t => !t.description && !t.ended_at && !t.aborted)[0];
-  const getfinishedTomato = () => {
+  const abortTomatoes = state.tomatoes.filter(t => t.aborted && !t.ended_at);
+  const unfinishedTomatoes = state.tomatoes.filter(t => !t.description && !t.ended_at && !t.aborted);
+  const getfinishedTomatoGroup = () => {
     const finished = state.tomatoes.filter(t => t.description && t.ended_at && !t.aborted);
     return _.groupBy(finished, (tomato) => {
       return format(new Date(tomato.started_at), 'yyyy-MM-d');
     });
   };
-  const finishedTomato = getfinishedTomato();
+  const finishedTomatoGroup = getfinishedTomatoGroup();
   return {
     todos,
     deleted,
     completed,
     unCompleted,
     tomatoes,
-    unfinishedTomato,
-    finishedTomato,
+    unfinishedTomatoes,
+    finishedTomatoGroup,
+    abortTomatoes,
     ...ownProps
   };
 };
 
-const mapDispatchToProps = {initTodos,initTomatoes};
+const mapDispatchToProps = {initTodos, initTomatoes};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 

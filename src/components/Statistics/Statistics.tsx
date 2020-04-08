@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import './Statistics.less';
-import {Todo} from '@/types';
+import {Todo, Tomato} from '@/types';
 import Polygon from '@/components/Statistics/Polygon/Polygon';
+import History from '@/components/Statistics/History/History';
 import _ from 'lodash';
 import {format} from 'date-fns';
-import TodoHistory from '@/components/Statistics/TodoHistory/TodoHistory';
 
 interface StatisticsProps {
   completed: Todo[]
   deleted: Todo[]
+  finishedTomatoGroup: {}
+  abortTomatoes: Tomato[]
 }
 
 const Statistics = (props: StatisticsProps) => {
@@ -19,6 +21,19 @@ const Statistics = (props: StatisticsProps) => {
     return _.groupBy(props.completed, (todo) => {
       return format(new Date(todo.updated_at), 'yyyy-MM-d');
     });
+  };
+
+  const history = () => {
+    if (toggle) {
+      return <History finishedTomatoGroup={props.finishedTomatoGroup}
+                      abortTomatoes={props.abortTomatoes}
+                      completed={props.completed}
+                      deleted={props.deleted}
+                      historyType={toggle}
+                      />;
+    } else {
+      return <span/>;
+    }
   };
 
   return (
@@ -43,7 +58,7 @@ const Statistics = (props: StatisticsProps) => {
           <Polygon dailyTodo={dailyTodo()} totalCompleted={props.completed.length}/>
         </li>
       </ul>
-      <TodoHistory completed={props.completed} deleted={props.deleted}/>
+      {history()}
     </div>
   );
 };

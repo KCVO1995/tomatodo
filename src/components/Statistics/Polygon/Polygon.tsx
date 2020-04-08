@@ -24,7 +24,6 @@ const Polygon = (props: PolygonProps) => {
         const y = (1 - finishedCount/props.totalCompleted) * 60;
         return `${x},${y}`;
       });
-      console.log(pointArr);
       return ['0,60', ...pointArr,'240,0','240,60'].join(' ');
     } else {
       return '0,60 240,60';

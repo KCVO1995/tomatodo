@@ -9,8 +9,8 @@ import TomatoAction from '@/components/Tomato/TomatoesAction/TomatoesAction';
 import TomatoList from '@/components/Tomato/TomatoList/TomatoList';
 
 interface TomatoProps {
-  unfinishedTomato: Tomato
-  finishedTomato: {}
+  unfinishedTomatoes: Tomato[]
+  finishedTomatoGroup: {}
   startTomato: (payload: Tomato) => void
   updateTomato: (payload: Tomato) => void
 }
@@ -35,10 +35,10 @@ const Tomatoes = (props: TomatoProps) => {
   return (
     <div className="tomatoes">
       <TomatoAction startTomato={startTomato}
-                    unfinishedTomato={props.unfinishedTomato}
+                    unfinishedTomato={props.unfinishedTomatoes[0]}
                     updateTomato={updateTomato}
       />
-      <TomatoList finishedTomatoes={props.finishedTomato}/>
+      <TomatoList finishedTomatoGroup={props.finishedTomatoGroup}/>
     </div>
   );
 };

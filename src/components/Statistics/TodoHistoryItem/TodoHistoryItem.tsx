@@ -8,15 +8,16 @@ import axios from '@/config/axios';
 
 interface TodoHistoryItemProps {
   itemType: string
-  todo: Todo
+  data: any
   updateTodo: (payload: Todo) => void
 }
 
 const TodoHistoryItem = (props: TodoHistoryItemProps) => {
 
+  console.log(props.data);
 
   const updateTodo = async (params: any) => {
-    const {id} = props.todo;
+    const {id} = props.data;
     try {
       const response = await axios.put(`todos/${id}`, params);
       props.updateTodo(response.data.resource);
@@ -24,14 +25,14 @@ const TodoHistoryItem = (props: TodoHistoryItemProps) => {
   };
 
   const action = () => {
-    if (props.itemType === 'completed') {
+    if (props.itemType === 'completed' || props.itemType === 'finishedTomato') {
       return (
         <div className="action">
           <span onClick={() => updateTodo({completed: false})}>恢复 </span>
           <span onClick={() => updateTodo({deleted: true})}>删除</span>
         </div>
       );
-    } else {
+    } else if (props.itemType === 'deleted' || props.itemType === 'unfinishedTomato') {
       return (
         <div className="action">
           <span onClick={() => updateTodo({deleted: false})}>恢复</span>
@@ -40,13 +41,37 @@ const TodoHistoryItem = (props: TodoHistoryItemProps) => {
     }
   };
 
-  const formatText = props.itemType === 'completed' ? 'HH:mm' : 'M月d日'
+  const time = () => {
+    if (props.itemType === 'completed') {
+      return (
+        <span className="time">{format(new Date(props.data.updated_at), 'HH:mm')}</span>
+      );
+    } else if (props.itemType === 'deleted') {
+      return (
+        <span className="time">{format(new Date(props.data.updated_at), 'M月d日')}</span>
+      );
+    } else if (props.itemType === 'finishedToamto') {
+      return (
+        <span className="time">
+          {format(new Date(props.data.started_at), 'HH:mm')}
+          -
+          {format(new Date(props.data.ended_at), 'HH:mm')}
+        </span>
+      );
+    } else if (props.itemType === 'abortTomato') {
+      return (
+        <span className="time">{format(new Date(props.data.started_at), 'M月d日')}</span>
+      );
+    }
+
+  };
+
 
   return (
     <div className="item">
       <div>
-        <span className="time">{format(new Date(props.todo.updated_at), formatText)}</span>
-        <span>{props.todo.description}</span>
+        {time()}
+        <span>{props.data.description || '这是一个没有描述的番茄'}</span>
       </div>
       {action()}
     </div>
