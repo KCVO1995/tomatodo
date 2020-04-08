@@ -37,9 +37,10 @@ class CountDown extends React.Component <ICountDownProps, IContDownStates> {
       const restTime = this.state.restTime;
       this.setState({restTime: restTime - 1000});
       document.title = `${this.clock} - 有一个番茄正在进行`;
-
-      if (restTime < 1000) {this.onTimeOver();}
-
+      if (restTime < 1000) {
+        this.onTimeOver();
+        document.title = `Tomatodo`;
+      }
     }, 1000);
   };
 

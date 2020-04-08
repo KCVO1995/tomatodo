@@ -22,20 +22,10 @@ const TodoHistory = (props: TodoHistoryProps) => {
     });
   };
 
-  const getDeletedGroup = () => {
-    return _.groupBy(props.deleted, (todo) => {
-      return format(new Date(todo.updated_at), 'yyyy-MM-d');
-    });
-  };
-
 
   const getDates = (group: {}) => {
     return Object.keys(group).sort((a, b) => Date.parse(b) - Date.parse(a));
   };
-
-
-  console.log(getCompletedGroup());
-  console.log(getDeletedGroup());
 
 
   const completedList = getDates(getCompletedGroup()).map(date => {
