@@ -35,7 +35,7 @@ const History = (props: TodoHistoryProps) => {
     return (
       <div key={date} className="list">
         <div className="title">
-          <div>
+          <div className="date-container">
             <span className="date">{format(new Date(date), 'M月d日')}</span>
             <span>{format(new Date(date), 'E')}</span>
           </div>
@@ -68,7 +68,7 @@ const History = (props: TodoHistoryProps) => {
     return (
       <div key={date} className="list">
         <div className="title">
-          <div>
+          <div className="date-container">
             <span className="date">{format(new Date(date), 'M月d日')}</span>
             <span>{format(new Date(date), 'E')}</span>
           </div>
@@ -95,9 +95,8 @@ const History = (props: TodoHistoryProps) => {
 
   const list = () => {
     if (props.historyType === 'todo') {
-      console.log(1);
       return (
-        <div className="todo-history">
+        <div className="history">
           <Tabs defaultActiveKey="1">
             <TabPane tab="已完成任务" key="1">
               {completedList}
@@ -110,7 +109,7 @@ const History = (props: TodoHistoryProps) => {
       );
     } else if (props.historyType === 'tomato') {
       return (
-        <div className="todo-history">
+        <div className="history">
           <Tabs defaultActiveKey="1">
             <TabPane tab="完成的番茄" key="1">
               {finishedTomatoList}

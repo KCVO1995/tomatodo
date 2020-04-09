@@ -23,7 +23,7 @@ const Login = () => {
     });
   };
   return (
-    <div className="sign-up">
+    <div className="login">
       <h1>欢迎登陆 Tomatodo</h1>
       <Input size="large" placeholder="请输入用户名" prefix={<UserOutlined/>}
              onChange={(e) => {setAccount(e.target.value);}}/>

@@ -15,3 +15,26 @@
   }
   .items {flex-grow: 1;}
 }
+@media(max-width:500px) {
+  .history {
+    width: 90vw;
+    .list{
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      >.title {
+        width: 100%;
+        > .date-container {
+          > .date {
+            float: left;
+            font-size: 18px;
+            margin-right: 15px;
+          }
+          :nth-child(2) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

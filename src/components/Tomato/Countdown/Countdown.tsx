@@ -46,6 +46,7 @@ class CountDown extends React.Component <ICountDownProps, IContDownStates> {
 
   onTimeOver = () => {
     this.props.onfinish();
+    document.title = `Tomatodo - 你的番茄土豆`;
     clearInterval(timerID);
   };
 
