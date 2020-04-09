@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/tomatodo/static/css/main.7ae74640.chunk.css",
+    "main.css": "/tomatodo/static/css/main.3d9089db.chunk.css",
     "main.js": "/tomatodo/static/js/main.48958ae0.chunk.js",
     "main.js.map": "/tomatodo/static/js/main.48958ae0.chunk.js.map",
     "runtime-main.js": "/tomatodo/static/js/runtime-main.f63b72bd.js",
@@ -9,17 +9,17 @@
     "static/js/2.6f6d01c1.chunk.js": "/tomatodo/static/js/2.6f6d01c1.chunk.js",
     "static/js/2.6f6d01c1.chunk.js.map": "/tomatodo/static/js/2.6f6d01c1.chunk.js.map",
     "index.html": "/tomatodo/index.html",
-    "precache-manifest.e751141084a84e76426fa61bf3070367.js": "/tomatodo/precache-manifest.e751141084a84e76426fa61bf3070367.js",
+    "precache-manifest.d13d56000d42298e667893987138794d.js": "/tomatodo/precache-manifest.d13d56000d42298e667893987138794d.js",
     "service-worker.js": "/tomatodo/service-worker.js",
     "static/css/2.b8ec3390.chunk.css.map": "/tomatodo/static/css/2.b8ec3390.chunk.css.map",
-    "static/css/main.7ae74640.chunk.css.map": "/tomatodo/static/css/main.7ae74640.chunk.css.map",
+    "static/css/main.3d9089db.chunk.css.map": "/tomatodo/static/css/main.3d9089db.chunk.css.map",
     "static/js/2.6f6d01c1.chunk.js.LICENSE": "/tomatodo/static/js/2.6f6d01c1.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.f63b72bd.js",
     "static/css/2.b8ec3390.chunk.css",
     "static/js/2.6f6d01c1.chunk.js",
-    "static/css/main.7ae74640.chunk.css",
+    "static/css/main.3d9089db.chunk.css",
     "static/js/main.48958ae0.chunk.js"
   ]
 }
