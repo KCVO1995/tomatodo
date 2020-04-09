@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tomato} from '@/types';
 import {format} from 'date-fns';
-import './TomatoList.less'
+import './TomatoList.less';
 
 interface TomatoListProps {
   finishedTomatoGroup: {}
@@ -12,12 +12,15 @@ interface TomatoItemProps {
 }
 
 const TomatoItem = (props: TomatoItemProps) => {
+
+  const duration = `${format(new Date(props.tomato.started_at), 'HH:mm')} - 
+  ${format(new Date(props.tomato.ended_at), 'HH:mm')}`;
+
+
   return (
     <div className="item">
       <span className='duration'>
-        {format(new Date(props.tomato.started_at), 'HH:mm')}
-          -
-        {format(new Date(props.tomato.ended_at), 'HH:mm')}
+        {duration}
       </span>
       <span className="description">{props.tomato.description}</span>
     </div>
@@ -29,9 +32,8 @@ const TomatoList = (props: TomatoListProps) => {
 
   const getDates = () => {
     const dates = Object.keys(props.finishedTomatoGroup);
-    return dates.sort((a, b) => Date.parse(b) - Date.parse(a)).splice(0,3);
+    return dates.sort((a, b) => Date.parse(b) - Date.parse(a)).splice(0, 3);
   };
-
 
 
   const list = getDates().map((date) => {
