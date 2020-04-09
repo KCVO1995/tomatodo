@@ -15,29 +15,46 @@ interface TodosProps {
 
 const Todos = (props: TodosProps) => {
 
+  const mainHtml = () => {
+    if (props.unCompleted.length > 0 || props.completed.length > 0) {
+      return (
+        <main className="todoList">
+          {
+            props.unCompleted.map((t: Todo) => {
+              return <InputItem key={t.id} todo={t}/>;
+            })
+          }
+          {
+            props.completed.map((t: Todo) => {
+              return <InputItem key={t.id} todo={t}/>;
+            })
+          }
+        </main>
+      );
+    } else {
+      return  (
+        <main className="no-record">
+          <svg className="icon" aria-hidden="true">
+            <use xlinkHref="#icon-todo"/>
+          </svg>
+          <div>没有记录</div>
+        </main>
+      )
+    }
+  };
+
 
   return (
     <div className="todos">
       <TodosInput/>
-      <main className="todoList">
-        {
-          props.unCompleted.map((t: Todo) => {
-            return <InputItem key={t.id} todo={t}/>;
-          })
-        }
-        {
-          props.completed.map((t: Todo) => {
-            return <InputItem key={t.id} todo={t}/>;
-          })
-        }
-      </main>
+      {mainHtml()}
     </div>
   );
 };
 
 
 const mapStateToProps = (state: { todos: Todo[] }, ownProps: any) => {
-  return {...ownProps}
+  return {...ownProps};
 };
 
 const mapDispatchToProps = {initTodos};

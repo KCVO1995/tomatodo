@@ -7,14 +7,23 @@
   margin-top: 20px;
   border-radius: 5px;
   width: calc(50% - 15px);
+  min-height: 300px;
   .todoList {
     display: block;
     margin: 10px 0;
     padding: 0;
+    
+  }
+  .no-record{
+    .no-record();
   }
 }
 @media(max-width:500px) {
   .todos {
     width: 100%;
+    min-height: 200px;
+    .no-record{
+      .no-record-mobile();
+    }
   }
 }

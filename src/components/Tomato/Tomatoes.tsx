@@ -32,13 +32,31 @@ const Tomatoes = (props: TomatoProps) => {
     } catch (e) {throw new Error(e);}
   };
 
+  const list = () => {
+    console.log(1);
+    if (Object.keys(props.finishedTomatoGroup).length > 0) {
+      console.log(2);
+      return <TomatoList finishedTomatoGroup={props.finishedTomatoGroup}/>
+    } else {
+      console.log(3);
+      return (
+        <div className="no-record">
+          <svg className="icon" aria-hidden="true">
+            <use xlinkHref="#icon-alarm-clock"/>
+          </svg>
+          <div>没有记录</div>
+        </div>
+      )
+    }
+  }
+
   return (
     <div className="tomatoes">
       <TomatoAction startTomato={startTomato}
                     unfinishedTomato={props.unfinishedTomatoes[0]}
                     updateTomato={updateTomato}
       />
-      <TomatoList finishedTomatoGroup={props.finishedTomatoGroup}/>
+      {list()}
     </div>
   );
 };

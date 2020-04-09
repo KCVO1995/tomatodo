@@ -6,11 +6,19 @@
   margin-top: 20px;
   border-radius: 5px;
   width: calc(50% - 15px);
+  min-height: 300px;
   .box-shadow-base;
+  .no-record{
+    .no-record();
+  }
 }
 
 @media(max-width:500px) {
   .tomatoes {
     width: 100%;
+    min-height: 200px;
+    .no-record {
+      .no-record-mobile()
+    }
   }
 }

@@ -64,7 +64,6 @@ const Home = (props: HomeProps) => {
       const tomatoes = response.data.resources.map((t: Todo) =>
         Object.assign({}, t, {editing: false})
       );
-      console.log(tomatoes);
       props.initTomatoes(tomatoes);
     } catch (e) {throw new Error(e);}
   };
