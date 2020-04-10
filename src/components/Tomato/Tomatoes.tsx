@@ -33,12 +33,9 @@ const Tomatoes = (props: TomatoProps) => {
   };
 
   const list = () => {
-    console.log(1);
     if (Object.keys(props.finishedTomatoGroup).length > 0) {
-      console.log(2);
       return <TomatoList finishedTomatoGroup={props.finishedTomatoGroup}/>
     } else {
-      console.log(3);
       return (
         <div className="no-record">
           <svg className="icon" aria-hidden="true">

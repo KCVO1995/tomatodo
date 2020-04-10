@@ -14,11 +14,13 @@ interface TomatoActionProps {
 
 const TomatoesAction = (props: TomatoActionProps) => {
   const [editText, setEditText] = useState('');
+  const [rest, setRest] = useState(false);
 
   const commit = () => {
     const {id} = props.unfinishedTomato;
     props.updateTomato(id, {description: editText, ended_at: new Date()});
     // updateTomato 可能网络延迟，避免用户看到空的input
+    setRest(true);
     setTimeout(() => {
       setEditText('');
     }, 500);
@@ -26,6 +28,7 @@ const TomatoesAction = (props: TomatoActionProps) => {
 
   const onfinish = () => {
     // 为了代替 forceUpdate 的曲线救国
+    setRest(false);
     setEditText(' ');
     setEditText('');
   };
@@ -38,32 +41,39 @@ const TomatoesAction = (props: TomatoActionProps) => {
   const {confirm} = Modal;
   const showConfirm = () => {
     confirm({
-      title: '您目前正在一个番茄工作时间中，要放弃这个番茄吗？',
+      title: rest ? '要取消休息时间吗？' : '您目前正在一个番茄工作时间中，要放弃这个番茄吗？',
       width: 500,
       mask: true,
       keyboard: true,
-      onOk() {abortTomato();},
+      onOk() {
+        rest ? setRest(false) : abortTomato();
+      },
       onCancel() {},
     });
   };
 
   const HTML = () => {
-    if (!props.unfinishedTomato) {
+    if (!props.unfinishedTomato && !rest) {
       return <Button onClick={props.startTomato}
                      className="startTomato">开始一个番茄</Button>;
     } else {
+      let duration;
+      let startedAt = 0;
       const {unfinishedTomato} = props;
-      // @ts-ignore
-      const nowTime = Date.parse(new Date());
-      // @ts-ignore
-      const startedAt = Date.parse(unfinishedTomato.started_at);
-      const {duration} = unfinishedTomato;
-      if (nowTime - startedAt <= duration) {
+      const nowTime = Date.parse(new Date().toString());
+      if (rest) {
+        duration = 300000;
+      } else {
+        startedAt = Date.parse(unfinishedTomato.started_at.toString());
+        duration = unfinishedTomato.duration;
+      }
+      if (nowTime - startedAt <= duration || rest) {
         return (
           <div className="timer-wrapper">
-            <Countdown timer={duration - nowTime + startedAt}
+            <Countdown timer={!rest ? duration - nowTime + startedAt : duration}
                        onfinish={onfinish}
                        duration={duration}
+                       rest={rest}
             />
             <CloseCircleOutlined className="abort" onClick={showConfirm}/>
           </div>
