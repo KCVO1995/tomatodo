@@ -13,6 +13,7 @@ import _ from 'lodash';
 import {format} from 'date-fns';
 import {initTomatoes} from '@/redux/actions/tomatoes';
 import Statistics from '@/components/Statistics/Statistics';
+import loadingURL from '@/assets/pomotodo-spinner.gif';
 
 interface Use {
   id: number
@@ -43,6 +44,8 @@ const Home = (props: HomeProps) => {
 
   const [user, setUser] = useState({} as Use);
 
+  const [loading, setLoading] = useState(true);
+
   const getMe = async () => {
     const response = await axios.get('/me');
     setUser(response.data);
@@ -69,9 +72,10 @@ const Home = (props: HomeProps) => {
   };
 
   useEffect(() => {
-    getMe();
-    getTodo();
-    getTomatoes();
+    Promise.all([getMe(), getTodo(), getTomatoes()])
+      .then(() => {
+        setLoading(false);
+      });
   }, []);
 
   const logout = () => {
@@ -90,27 +94,37 @@ const Home = (props: HomeProps) => {
     </Menu>
   );
 
+  const onLoading = <img src={loadingURL} alt="loading" className="loading"/>;
+  const tomatodo = () => {
+    return (
+      <>
+        <header>
+          <h1>Tomatodo</h1>
+          <Dropdown overlay={menu} trigger={['click']}>
+            <a href=" " className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+              <span>{user.account}</span><DownOutlined/>
+            </a>
+          </Dropdown>
+        </header>
+        <main>
+          <Tomatoes finishedTomatoGroup={props.finishedTomatoGroup} unfinishedTomatoes={props.unfinishedTomatoes}/>
+          <Todos completed={props.completed} unCompleted={props.unCompleted}/>
+        </main>
+        <Statistics completed={props.completed}
+                    deleted={props.deleted}
+                    finishedTomatoGroup={props.finishedTomatoGroup}
+                    finishedTomatoes={props.finishedTomatoes}
+                    abortTomatoes={props.abortTomatoes}
+        />
+      </>
+
+    );
+  };
+
 
   return (
     <div className="index">
-      <header>
-        <h1>Tomatodo</h1>
-        <Dropdown overlay={menu} trigger={['click']}>
-          <a href=" " className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-            <span>{user.account}</span><DownOutlined/>
-          </a>
-        </Dropdown>
-      </header>
-      <main>
-        <Tomatoes finishedTomatoGroup={props.finishedTomatoGroup} unfinishedTomatoes={props.unfinishedTomatoes}/>
-        <Todos completed={props.completed} unCompleted={props.unCompleted}/>
-      </main>
-      <Statistics completed={props.completed}
-                  deleted={props.deleted}
-                  finishedTomatoGroup={props.finishedTomatoGroup}
-                  finishedTomatoes={props.finishedTomatoes}
-                  abortTomatoes={props.abortTomatoes}
-      />
+      {loading ? onLoading : tomatodo()}
     </div>
   );
 };
