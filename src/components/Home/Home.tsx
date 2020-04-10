@@ -14,6 +14,7 @@ import {format} from 'date-fns';
 import {initTomatoes} from '@/redux/actions/tomatoes';
 import Statistics from '@/components/Statistics/Statistics';
 import loadingURL from '@/assets/pomotodo-spinner.gif';
+import {message} from 'antd';
 
 interface Use {
   id: number
@@ -46,6 +47,11 @@ const Home = (props: HomeProps) => {
 
   const [loading, setLoading] = useState(true);
 
+  const error = () => {
+    message.error('网络好像出了点问题，请稍后再试');
+  };
+
+
   const getMe = async () => {
     const response = await axios.get('/me');
     setUser(response.data);
@@ -75,6 +81,8 @@ const Home = (props: HomeProps) => {
     Promise.all([getMe(), getTodo(), getTomatoes()])
       .then(() => {
         setLoading(false);
+      }, () => {
+        error()
       });
   }, []);
 

@@ -3,13 +3,14 @@ import {connect} from 'react-redux';
 import {addTodo} from '@/redux/actions/todos';
 import axios from '@/config/axios';
 
-import {Input} from 'antd';
+import {Input, message} from 'antd';
 import {EnterOutlined} from '@ant-design/icons';
 
 interface InputTodosProps {addTodo: (params: { description: string }) => void}
 
 const TodosInput = (props: InputTodosProps) => {
   const [description, setDescription] = useState('');
+  const error = () => {message.error('请指定一个任务');};
 
   const commit = async () => {
     if (description !== '') {
@@ -18,7 +19,7 @@ const TodosInput = (props: InputTodosProps) => {
         props.addTodo(response.data.resource);
         setDescription('');
       } catch (e) {throw new Error(e);}
-    } else {alert('请指定一个todo');}
+    } else {error()}
   };
 
 
