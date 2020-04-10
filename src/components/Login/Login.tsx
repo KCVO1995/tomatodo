@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Input} from 'antd';
+import {Input, message} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
 import {Link, useHistory} from 'react-router-dom';
 import axios from '@/config/axios';
@@ -11,15 +11,21 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const history = useHistory();
 
+  const error = () => {
+    message.error('用户名或密码错误，请重新输入');
+  };
+
+
   const commit = async () => {
     axios.post('sign_in/user', {
       account,
       password,
     }).then(() => {
-      console.log('登陆成功');
       history.push('/');
     }, (e) => {
-      throw new Error(e);
+      if(e.response.status === 422) {
+        error()
+      }
     });
   };
   return (
