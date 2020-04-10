@@ -107,7 +107,10 @@ const Home = (props: HomeProps) => {
     return (
       <>
         <header>
-          <h1>Tomatodo</h1>
+          <h1>
+            <svg className="icon" aria-hidden="true">
+              <use xlinkHref="#icon-fanqie"/>
+            </svg>Tomatodo</h1>
           <Dropdown overlay={menu} trigger={['click']}>
             <a href=" " className="ant-dropdown-link" onClick={e => e.preventDefault()}>
               <span>{user.account}</span><DownOutlined/>
