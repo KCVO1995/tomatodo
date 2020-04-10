@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c0c85ea91b968f5925d0aa806f3ad2ee",
+    "revision": "b4b7779b76c50c8c43e198941e41646c",
     "url": "/tomatodo/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tomatodo/static/css/2.6fdd5308.chunk.css"
   },
   {
-    "revision": "17d35b573675c797d6bd",
-    "url": "/tomatodo/static/css/main.35351ad5.chunk.css"
+    "revision": "dd8775c4b5a7ae4864d4",
+    "url": "/tomatodo/static/css/main.ffb28db0.chunk.css"
   },
   {
     "revision": "f160e462e86da3bebd53",
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tomatodo/static/js/2.23e4fe15.chunk.js.LICENSE"
   },
   {
-    "revision": "17d35b573675c797d6bd",
-    "url": "/tomatodo/static/js/main.8d4e9919.chunk.js"
+    "revision": "dd8775c4b5a7ae4864d4",
+    "url": "/tomatodo/static/js/main.ac9d1111.chunk.js"
   },
   {
     "revision": "5df9d0234b8e270d54fc",
