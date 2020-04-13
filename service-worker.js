@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/tomatodo/precache-manifest.21a939e9802a92d419c60aa67e300c32.js"
+  "/tomatodo/precache-manifest.697d82a46b1e9e6ede2507cd6d1cd8c1.js"
 );
 
 self.addEventListener('message', (event) => {
